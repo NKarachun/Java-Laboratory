@@ -1,0 +1,18 @@
+class StringCalculator {
+    public int Add(String numbers) {
+        String[] numbersArray;
+        String delimiter = ",";
+        int digit;
+        int sum = 0;
+        if (numbers.length() != 0) {
+            numbersArray = numbers.split(delimiter);
+            for (int i = 0; i < numbersArray.length; i++) {
+                digit = Integer.valueOf(numbersArray[i]);
+                if (digit > 1000) {
+                    digit = 0;
+                }
+                sum += digit;
+            }
+        }
+        return sum;
+    }
