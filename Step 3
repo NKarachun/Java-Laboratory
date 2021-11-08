@@ -1,0 +1,20 @@
+class StringCalculator {
+    public int Add(String numbers) {
+        String[] linesArray;
+        String[] numbersArray;
+        String delimiter = ",";
+        int digit;
+        int sum = 0;
+        if (numbers.length() != 0) {
+            linesArray = numbers.split("\\n");
+            for (int i = 0; i < linesArray.length; i++){
+                numbersArray = linesArray[i].split(delimiter);
+                for (int j = 0; j < numbersArray.length; j++) {
+                    digit = Integer.valueOf(numbersArray[j]);
+                    sum += digit;
+                }
+            }
+        }
+        return sum;
+    }
+}
