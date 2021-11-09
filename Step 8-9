@@ -1,0 +1,58 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+class StringCalculator {
+    public int Add(String numbers) throws IllegalArgumentException {
+        String[] numbersArray;
+        String[] delimiterArray;
+        String negative = "";
+        String delimiter = ",";
+        String del;
+        int digit;
+        int sum = 0;
+
+        String pattern = "//(.*)\n(.*)";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(numbers);
+        int start = numbers.indexOf("//");
+        int finish = numbers.indexOf("\n");
+
+        if (numbers.length() != 0) {
+            if (m.find()) {
+                del = numbers.substring(start + 2, finish);
+                if (del.charAt(0) == '[' && del.charAt(del.length() - 1) == ']' ) {
+                    del = del.substring(1, del.length() - 1);
+                }
+                delimiterArray = del.split("]\\[");
+
+                numbers = numbers.substring(finish + 1);
+                for (int i = 0; i < delimiterArray.length; i++){
+                    numbers = numbers.replace(delimiterArray[i], delimiter);
+                }
+            }
+            numbers = numbers.replaceAll("\n", delimiter);
+            numbersArray = numbers.split(delimiter);
+            for (int j = 0; j < numbersArray.length; j++) {
+                digit = Integer.parseInt(numbersArray[j]);
+                if (digit < 0) {
+                    if (negative.equals("")) {
+                        negative = String.valueOf(digit);
+                    }
+                    else {
+                        negative = negative + "," + digit;
+                    }
+                }
+                else{
+                    if (digit <= 1000) {
+                        sum += digit;
+                    }
+                }
+            }
+            if (!negative.equals("")) {
+                sum = 0;
+                System.out.println("Negatives not allowed: " + negative);
+            }
+        }
+        return sum;
+    }
+}
